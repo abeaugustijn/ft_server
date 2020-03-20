@@ -1,0 +1,43 @@
+# HTTP server setup
+server {
+	# Listen on http (IPv4 and IPv6)
+	listen		80;
+	listen		[::]:80;
+
+	server_name	_;
+	return 301 https://$host$request_uri;
+}
+
+# HTTPS server setup
+server {
+	listen				443 ssl;
+	listen				[::]:443 ssl;
+
+	# SSL config
+	ssl					on;
+	ssl_certificate		/ssl/localhost.cert;
+	ssl_certificate_key	/ssl/localhost.key;
+	
+	# Set the static file root to the wordpress files
+	root 				/var/www/localhost/wordpress;
+
+	# Define the index page
+	index 				index.php;
+
+	server_name			localhost www.localhost;
+
+	location / {
+		# Enable static file hosting
+		autoindex	on;
+		try_files	$uri $uri/ =404;
+	}
+
+	# Config for any php file requested
+	location ~ \.php {
+		# Include the configuration for the fastcgi php interface
+		include			snippets/fastcgi-php.conf;
+
+		# Pass the file to the unix socket on which php is listening
+		fastcgi_pass	unix:/run/php/php7.3-fpm.sock;
+	}
+}
