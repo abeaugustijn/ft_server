@@ -57,7 +57,7 @@ RUN		chmod +x wp-cli.phar && mv wp-cli.phar /usr/local/bin/wp
 # Add wordpress system user
 RUN		adduser --disabled-password --gecos '' wordpress
 RUN		sudo adduser wordpress sudo
-RUN		chmod -R 755 /var/www/localhost
+RUN		chmod -R 777 /var/www/localhost
 RUN		chown -R wordpress:wordpress /var/www/localhost
 
 # Install wp core
@@ -79,7 +79,7 @@ RUN		service mysql start &&\
 RUN		rm -rf /usr/share/nginx/www
 
 # Expose http and https ports
-EXPOSE 	80 443 110
+EXPOSE 	80 443 110 21
 
 # Start services and run a shell
 ENTRYPOINT \
