@@ -72,7 +72,7 @@ RUN		service mysql start &&\
 
 # Download latest wordpress plugins
 RUN		service mysql start &&\
-	sudo -u wordpress\
+		sudo -u wordpress\
 		wp plugin update --all --allow-root --path=/var/www/localhost/wordpress
 
 # Remove NGINXs' default site
@@ -87,5 +87,4 @@ ENTRYPOINT \
 	service php7.3-fpm start &&\
 	service mysql start &&\
 	service vsftpd start &&\
-	service --status-all &&\
 	/bin/zsh
