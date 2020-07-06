@@ -83,8 +83,7 @@ EXPOSE 	80 443 110 21
 
 # Start services and run a shell
 ENTRYPOINT \
-	service nginx start &&\
 	service php7.3-fpm start &&\
 	service mysql start &&\
 	service vsftpd start &&\
-	/bin/zsh
+	nginx -g "daemon off;"
