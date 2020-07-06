@@ -78,12 +78,19 @@ RUN		service mysql start &&\
 # Remove NGINXs' default site
 RUN		rm -rf /usr/share/nginx/www
 
+# Set up nginx autoindex configuration
+RUN		mkdir /nginx
+COPY	srcs/nginx/* /nginx/
+COPY	srcs/launch_nginx.sh /nginx/
+RUN		chmod +x /nginx/launch_nginx.sh &&\
+		mkdir /etc/nginx/locations-enabled
+
 # Expose http and https ports
-EXPOSE 	80 443 110 21
+EXPOSE 	80 443 21
 
 # Start services and run a shell
 ENTRYPOINT \
 	service php7.3-fpm start &&\
 	service mysql start &&\
 	service vsftpd start &&\
-	nginx -g "daemon off;"
+	/nginx/launch_nginx.sh

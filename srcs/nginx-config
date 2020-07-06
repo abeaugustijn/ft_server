@@ -26,11 +26,7 @@ server {
 
 	server_name			localhost www.localhost;
 
-	location / {
-		# Enable static file hosting
-		autoindex	on;
-		try_files	$uri $uri/ =404;
-	}
+	include				/etc/nginx/locations-enabled/*;
 
 	# Config for any php file requested
 	location ~ \.php {
