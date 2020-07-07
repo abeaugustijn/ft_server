@@ -85,6 +85,9 @@ COPY	srcs/launch_nginx.sh /nginx/
 RUN		chmod +x /nginx/launch_nginx.sh &&\
 		mkdir /etc/nginx/locations-enabled
 
+# Set upload limit in php.ini
+RUN		echo "upload_max_filesize = 256M\npost_max_size = 256M" >> /etc/php/7.3/fpm/php.ini
+
 # Expose http and https ports
 EXPOSE 	80 443 21
 

@@ -13,6 +13,9 @@ server {
 	listen				443 ssl;
 	listen				[::]:443 ssl;
 
+	# Set max upload size
+	client_max_body_size	256M;
+
 	# SSL config
 	ssl					on;
 	ssl_certificate		/ssl/localhost.cert;
